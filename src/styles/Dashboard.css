@@ -1,0 +1,39 @@
+@import './_variables.css';
+
+.dashboard-tabs .nav-link {
+  color: var(--color-text-light);
+  font-weight: var(--font-weight-medium);
+  padding: 12px 20px;
+  border: none;
+  border-bottom: 2px solid transparent;
+  border-radius: 0 !important;
+}
+
+.dashboard-tabs .nav-link.active {
+  color: var(--color-primary);
+  border-bottom: 2px solid var(--color-primary);
+  background-color: transparent !important;
+}
+
+.stat-card {
+  padding: 2rem;
+  text-align: center;
+  border-radius: var(--border-radius);
+  background: var(--color-grey-light-2);
+}
+
+.stat-card-icon {
+  color: var(--color-primary);
+  margin-bottom: 1rem;
+}
+
+.stat-card-value {
+  font-size: 2.5rem;
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text-dark);
+}
+
+.stat-card-title {
+  font-size: 1rem;
+  color: var(--color-text-light);
+}

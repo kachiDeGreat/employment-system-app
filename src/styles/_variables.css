@@ -1,0 +1,31 @@
+:root {
+  /* Color Palette */
+  --color-primary: #4a69e2; /* A strong, professional blue */
+  --color-primary-light: #eef1ff;
+  --color-primary-dark: #3b54b5;
+
+  --color-grey-light-1: #f9f9f9; /* Main background */
+  --color-grey-light-2: #ffffff; /* Card background */
+  --color-grey-light-3: #f0f0f0; /* Borders */
+  
+  --color-text-dark: #2c3e50;
+  --color-text-light: #7f8c8d;
+
+  --color-success: #2ecc71;
+  --color-warning: #f1c40f;
+  --color-danger: #e74c3c;
+  
+  /* Typography */
+  --font-family-sans: 'Inter', sans-serif;
+  --font-weight-regular: 400;
+  --font-weight-medium: 500;
+  --font-weight-bold: 700;
+  
+  /* Layout & Shadows */
+  --border-radius: 8px;
+  --shadow-sm: 0 2px 4px rgba(0,0,0,0.05);
+  --shadow-md: 0 4px 10px rgba(0,0,0,0.08);
+  --shadow-lg: 0 10px 30px rgba(0,0,0,0.1);
+  
+  --layout-max-width: 1200px;
+}

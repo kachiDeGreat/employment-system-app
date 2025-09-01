@@ -1,0 +1,73 @@
+@import './_variables.css';
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--font-family-sans);
+  background-color: var(--color-grey-light-1);
+  color: var(--color-text-dark);
+  line-height: 1.6;
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.fade-in {
+  animation: fadeIn 0.5s ease-out forwards;
+}
+
+/* Custom Button Styles */
+.btn-custom {
+  background-color: var(--color-primary);
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: var(--border-radius);
+  font-weight: var(--font-weight-medium);
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+.btn-custom:hover {
+  background-color: var(--color-primary-dark);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+.btn-custom-outline {
+  background-color: transparent;
+  color: var(--color-primary);
+  border: 1px solid var(--color-primary);
+}
+
+.btn-custom-outline:hover {
+  background-color: var(--color-primary);
+  color: white;
+}
+
+/* Override Bootstrap Defaults */
+.navbar {
+    background-color: var(--color-grey-light-2) !important;
+    box-shadow: var(--shadow-sm);
+}
+
+.card {
+    border-radius: var(--border-radius) !important;
+    border: 1px solid var(--color-grey-light-3) !important;
+    box-shadow: var(--shadow-sm) !important;
+    transition: all 0.3s ease;
+}
+
+.card:hover {
+    box-shadow: var(--shadow-md) !important;
+    transform: translateY(-5px);
+}
