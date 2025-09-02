@@ -1,15 +1,20 @@
 import React, { useState, useEffect } from "react";
-import { Form, Button, Alert, Card, Spinner } from "react-bootstrap";
+import { Form, Button, Alert, Spinner } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import { login } from "../../features/auth/authSlice";
 import { UserRole } from "../../types";
+import { Eye, EyeOff, Mail, Lock } from "lucide-react";
+import styles from "../../styles/LoginPage.module.css";
 
 export const LoginForm: React.FC = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+  const [rememberMe, setRememberMe] = useState(false);
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const { currentUser, isAuthenticated } = useAppSelector(
@@ -20,6 +25,7 @@ export const LoginForm: React.FC = () => {
     e.preventDefault();
     setError("");
     setIsLoading(true);
+
     setTimeout(() => {
       try {
         dispatch(login({ email, password }));
@@ -50,48 +56,83 @@ export const LoginForm: React.FC = () => {
   }, [isAuthenticated, currentUser, navigate]);
 
   return (
-    <Card>
-      <Card.Body>
-        <Card.Title className="text-center h3 mb-4">Welcome Back</Card.Title>
-        {error && <Alert variant="danger">{error}</Alert>}
-        <Form onSubmit={handleSubmit} noValidate>
-          <Form.Group className="mb-3" controlId="formBasicEmail">
-            <Form.Label>Email address</Form.Label>
+    <div className={styles.loginForm}>
+      {error && (
+        <Alert variant="danger" className="mb-4">
+          {error}
+        </Alert>
+      )}
+
+      <Form onSubmit={handleSubmit} noValidate>
+        <Form.Group className="mb-4">
+          <Form.Label className={styles.inputLabel}>Email Address</Form.Label>
+          <div className={styles.inputGroup}>
+            {/* <div className={styles.inputIcon}>
+              <Mail size={18} />
+            </div> */}
             <Form.Control
               type="email"
-              placeholder="Enter email"
+              placeholder="name@university.edu"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
+              className={styles.formInput}
               required
             />
-          </Form.Group>
-          <Form.Group className="mb-3" controlId="formBasicPassword">
-            <Form.Label>Password</Form.Label>
+          </div>
+        </Form.Group>
+
+        <Form.Group className="mb-4">
+          <Form.Label className={styles.inputLabel}>Password</Form.Label>
+          <div className={styles.inputGroup}>
+            {/* <div className={styles.inputIcon}>
+              <Lock size={18} />
+            </div> */}
             <Form.Control
-              type="password"
-              placeholder="Password"
+              type={showPassword ? "text" : "password"}
+              placeholder="Enter your password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
+              className={styles.formInput}
               required
             />
-          </Form.Group>
-          <div className="d-grid">
-            <Button variant="primary" type="submit" disabled={isLoading}>
-              {isLoading ? (
-                <Spinner
-                  as="span"
-                  animation="border"
-                  size="sm"
-                  role="status"
-                  aria-hidden="true"
-                />
-              ) : (
-                "Login"
-              )}
+            <Button
+              variant="link"
+              className={styles.passwordToggle}
+              onClick={() => setShowPassword(!showPassword)}
+            >
+              {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
             </Button>
           </div>
-        </Form>
-      </Card.Body>
-    </Card>
+          <div className={styles.passwordOptions}>
+            <Form.Check
+              type="checkbox"
+              id="remember-me"
+              label="Remember me"
+              checked={rememberMe}
+              onChange={() => setRememberMe(!rememberMe)}
+              className={styles.rememberMe}
+            />
+            <a href="/forgot-password" className={styles.forgotLink}>
+              Forgot password?
+            </a>
+          </div>
+        </Form.Group>
+
+        <Button
+          type="submit"
+          className={styles.loginButton}
+          disabled={isLoading}
+        >
+          {isLoading ? (
+            <>
+              <span className={styles.spinner}></span>
+              Signing in...
+            </>
+          ) : (
+            "Sign In"
+          )}
+        </Button>
+      </Form>
+    </div>
   );
 };

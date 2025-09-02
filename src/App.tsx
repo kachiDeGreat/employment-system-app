@@ -45,7 +45,7 @@ function App() {
         }}
       />
       <AppNavbar />
-      <main className="container my-5">
+      <main className="container-fluid p-0">
         <AnimatePresence mode="wait">
           <motion.div
             key={location.pathname}

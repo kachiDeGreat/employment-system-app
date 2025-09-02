@@ -1,10 +1,11 @@
 import React, { useState } from "react";
-import { Button, Card, Col, Row } from "react-bootstrap";
+import { Button, Card, Col, Row, Badge } from "react-bootstrap";
 import { useAppSelector, useAppDispatch } from "../../app/hooks";
 import { deleteJob } from "../../features/jobs/jobsSlice";
 import { JobEditorModal } from "./JobEditorModal";
 import { ApplicationList } from "./ApplicationList";
-import { Plus, Eye, Edit, Trash2 } from "lucide-react";
+import { Plus, Eye, Edit, Trash2, MapPin, Calendar, Users, Briefcase } from "lucide-react";
+import styles from "../../styles/EmployerDashboard.module.css";
 
 export const ManageJobs: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -51,60 +52,112 @@ export const ManageJobs: React.FC = () => {
 
   return (
     <div>
-      <div className="d-flex justify-content-between align-items-center mb-4">
-        <h3>Manage Job Postings</h3>
-        <Button variant="primary" onClick={handleAddNew} className="icon-text">
-          <Plus size={18} /> Post New Job
+      <div className={styles.sectionHeader}>
+        <div>
+          <h3 className={styles.sectionTitle}>Manage Job Postings</h3>
+          <p className={styles.sectionSubtitle}>
+            Create and manage your job listings, track applications, and find
+            the perfect candidates
+          </p>
+        </div>
+        <Button
+          variant="primary"
+          onClick={handleAddNew}
+          className={styles.addJobButton}
+        >
+          <Plus size={18} className="me-2" />
+          Post New Job
         </Button>
       </div>
 
       {myJobs.length > 0 ? (
-        myJobs.map((job) => (
-          <Card key={job.id} className="mb-3">
-            <Card.Body>
-              <Row className="align-items-center">
-                <Col>
-                  <h5 className="mb-1">{job.title}</h5>
-                  <small className="text-secondary">
-                    Posted: {new Date(job.postedDate).toLocaleDateString()}
-                  </small>
-                </Col>
-                <Col xs="auto" className="d-flex gap-2">
+        <div className={styles.jobsGrid}>
+          {myJobs.map((job) => (
+            <Card key={job.id} className={styles.jobCard}>
+              <Card.Body>
+                <div className={styles.jobHeader}>
+                  <div className={styles.jobInfo}>
+                    <h5 className={styles.jobTitle}>{job.title}</h5>
+                    <p className={styles.companyName}>{job.employerName}</p>
+                  </div>
+                  <Badge bg="success" className={styles.statusBadge}>
+                    Active
+                  </Badge>
+                </div>
+
+                <div className={styles.jobMeta}>
+                  <div className={styles.metaItem}>
+                    <MapPin size={14} />
+                    <span>{job.location}</span>
+                  </div>
+                  <div className={styles.metaItem}>
+                    <Calendar size={14} />
+                    <span>
+                      Posted {new Date(job.postedDate).toLocaleDateString()}
+                    </span>
+                  </div>
+                  <div className={styles.metaItem}>
+                    <Users size={14} />
+                    <span>12 Applications</span>
+                  </div>
+                </div>
+
+                <p className={styles.jobDescription}>
+                  {job.description.substring(0, 120)}...
+                </p>
+
+                <div className={styles.jobActions}>
                   <Button
-                    variant="outline-info"
+                    variant="outline-primary"
                     size="sm"
                     onClick={() => setViewingAppsForJobId(job.id)}
-                    className="icon-text"
+                    className={styles.actionButton}
                   >
-                    <Eye size={16} />
+                    <Eye size={16} className="me-1" />
+                    View Applications
                   </Button>
                   <Button
                     variant="outline-secondary"
                     size="sm"
                     onClick={() => handleEdit(job)}
-                    className="icon-text"
+                    className={styles.actionButton}
                   >
-                    <Edit size={16} />
+                    <Edit size={16} className="me-1" />
+                    Edit
                   </Button>
                   <Button
                     variant="outline-danger"
                     size="sm"
                     onClick={() => handleDelete(job.id)}
-                    className="icon-text"
+                    className={styles.actionButton}
                   >
-                    <Trash2 size={16} />
+                    <Trash2 size={16} className="me-1" />
+                    Delete
                   </Button>
-                </Col>
-              </Row>
-            </Card.Body>
-          </Card>
-        ))
+                </div>
+              </Card.Body>
+            </Card>
+          ))}
+        </div>
       ) : (
-        <Card>
-          <Card.Body>
-            <p className="mb-0 text-center text-secondary">
-              You have not posted any jobs yet.
+        <Card className={styles.emptyState}>
+          <Card.Body className="text-center py-5">
+            <div className={styles.emptyStateIcon}>
+              <Briefcase size={48} />
+            </div>
+            <h5 className={styles.emptyStateTitle}>No job postings yet</h5>
+            <p className={styles.emptyStateText}>
+              Get started by creating your first job posting to attract talented
+              candidates.
             </p>
+            <Button
+              variant="primary"
+              onClick={handleAddNew}
+              className={styles.emptyStateButton}
+            >
+              <Plus size={18} className="me-2" />
+              Create Your First Job
+            </Button>
           </Card.Body>
         </Card>
       )}
